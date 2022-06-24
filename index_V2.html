@@ -5,9 +5,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     <style>
+        
+
+      
       body { background: #000000; }
 
       .top-bar {
@@ -16,8 +17,8 @@
         top: 0; left: 0;
         z-index: 10;
         background-color: #FFFFFF;
-        max-height: 60px;
-        height: 60px;
+        max-height: 40px;
+        height: 40px;
         padding: 15px 0;
         display: flex;
         justify-content: space-between;
@@ -29,26 +30,34 @@
         bottom: 0; left: 0;
         z-index: 10;
         background-color: #FFFFFF;
-        max-height: 60px;
-        height: 60px;
+        max-height: 40px;
+        height: 40px;
         padding: 15px 0;
         display: flex;
         justify-content: space-evenly;
       }
 
-      .icon {
+      .iconleft {
         flex: 0 0 auto;
         display: block;
         max-width: 100%;
+        padding-left: 15px;
       }
-
+      
+      .iconright {
+        flex: 0 0 auto;
+        display: block;
+        max-width: 100%;
+        padding-right: 15px;
+      }
+      
       .icon.middle {
         position: absolute;
         top: 15px; left: 50%;
         transform: translateX(-50%);
         display: block;
         max-width: 100%;
-        min-height: 60px;
+        min-height: 40px;
       }
 
       .media {
@@ -67,32 +76,30 @@
         max-width: 600px;
         max-height: 100vh;
         overflow-y: auto;
-        display: flex;
-        flex-direction: column-reverse;
+        margin: 0 auto;
       }
       div.block::-webkit-scrollbar {
           display: none;
       }
       ul {
         list-style-type: none;
-        padding-left: 0;
-        /* transform: rotate(180deg); */
       }
 
-      body {
-        position: relative;
-        /* transform: rotate(180deg); */
-      }
+
+        
+
+        
 
     </style>
     
   </head>
 
   <body>
+    
     <div class="top-bar">
-      <img class="icon" src="img/icon.svg">
+      <img class="iconleft" src="img/icon.svg">
       <img class="icon middle" src="img/icon-wide.svg">
-      <img class="icon" src="img/icon-double.svg">
+      <img class="iconright" src="img/icon-double.svg">
     </div>
 
     <div class="bottom-bar">
@@ -107,12 +114,7 @@
       <ul data-current="0">
         <li>
           <picture class="media">
-            <img src="/Users/vv-imac-015/Documents/GitHub/Instagram/data/TEST_INSTAGRAMSITE_3-01.png">
-          </picture>
-        </li>
-        <li>
-          <picture class="media">
-            <img src="/Users/vv-imac-015/Documents/GitHub/Instagram/data/TEST_INSTAGRAMSITE_3-01.png">
+            <img src="data/TEST_INSTAGRAMSITE_3-01.png">
           </picture>
         </li>
       </ul>
@@ -121,25 +123,29 @@
   </body>
 
   <script>
-    document.addEventListener( "DOMContentLoaded", function() {
-      // it's a div, that holds your news
-      // it holds ul with news in li elements
-      var div = document.getElementById( "container" );
-      div.addEventListener( "scroll", function() {
-        var max_scroll = this.scrollHeight - this.clientHeight;
-        var current_scroll = this.scrollTop;
-        var bottom = 100;
-        if ( current_scroll + bottom <= max_scroll ) {
-          var ul = document.getElementsByTagName( "ul" )[ 0 ];
-          var current = parseInt( ul.dataset.current, 10 );
-          var li = document.getElementsByTagName( "li" )[ current ];
-          var new_li = li.cloneNode( true );
-          // ul.appendChild( new_li );
-          ul.prepend( new_li );
-          ul.dataset.current = current + 1;
-        }
-      });
-    } );
+
+let isLooping = false;
+ScrollTrigger.create({
+  markers: true,
+  trigger: "#intro",
+  start: "0",
+  end: "max",
+  onLeave: () => {
+    if (!isLooping) {
+      window.scrollTo(0, 0);
+    }
+    isLooping = !isLooping;
+  },
+  onLeaveBack: () => {
+    if (!isLooping) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+    isLooping = !isLooping;
+  },
+});
+    
+
   </script>
-  <!-- https://stackoverflow.com/questions/64534951/creating-an-infinite-scroll-loop-with-div-contents -->
 </html>
+
+<!-- https://stackoverflow.com/questions/64534951/creating-an-infinite-scroll-loop-with-div-contents -->
